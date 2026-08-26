@@ -26,7 +26,7 @@ export function getAiConfig() {
   return {
     key: gKey,
     url: process.env.AI_GATEWAY_URL || "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-    model: process.env.AI_MODEL || "gemini-2.5-flash",
+    model: process.env.AI_MODEL || "gemini-1.5-flash",
   };
 }
 
