@@ -47,7 +47,9 @@ export const Route = createFileRoute("/api/chat")({
                   if (payload === "[DONE]") { controller.close(); return; }
                   try {
                     const json = JSON.parse(payload);
-                    const delta: string | undefined = json?.choices?.[0]?.delta?.content;
+                    const delta: string | undefined =
+                      json?.choices?.[0]?.delta?.content ??
+                      json?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (delta) controller.enqueue(encoder.encode(delta));
                   } catch { /* ignore keepalives */ }
                 }

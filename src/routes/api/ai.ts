@@ -28,7 +28,10 @@ export const Route = createFileRoute("/api/ai")({
 
         if (!stream) {
           const json = await upstream.json();
-          const text: string = json?.choices?.[0]?.message?.content ?? "";
+          const text: string =
+            json?.choices?.[0]?.message?.content ??
+            json?.candidates?.[0]?.content?.parts?.[0]?.text ??
+            "";
           return new Response(text, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
         }
 
@@ -52,7 +55,9 @@ export const Route = createFileRoute("/api/ai")({
                   if (payload === "[DONE]") { controller.close(); return; }
                   try {
                     const j = JSON.parse(payload);
-                    const delta: string | undefined = j?.choices?.[0]?.delta?.content;
+                    const delta: string | undefined =
+                      j?.choices?.[0]?.delta?.content ??
+                      j?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (delta) controller.enqueue(encoder.encode(delta));
                   } catch { /* ignore */ }
                 }
