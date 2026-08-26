@@ -7,16 +7,26 @@ When asked about salaries or companies, cite realistic Indian tech ranges (SDE-1
 Keep responses focused; use short paragraphs, bullet lists, and bolded headings sparingly. End with one clear next action.`;
 
 export function getAiConfig() {
-  const key =
+  const key = (
+    process.env.AI_GATEWAY_API_KEY ||
     process.env.GEMINI_API_KEY ||
     process.env.VITE_GEMINI_API_KEY ||
-    process.env.AI_GATEWAY_API_KEY ||
     process.env["LOV" + "ABLE_API_KEY"] ||
     process.env.OPENAI_API_KEY ||
-    "";
+    ""
+  ).trim();
 
-  // Check if key is a Google Gemini key
-  if (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || key.startsWith("AIza")) {
+  // 1. AI Gateway key (starts with AQ. or set in AI_GATEWAY_API_KEY)
+  if (key.startsWith("AQ.") || process.env.AI_GATEWAY_API_KEY) {
+    return {
+      key,
+      url: process.env.AI_GATEWAY_URL || "https://ai.gateway.lovable.dev/v1/chat/completions",
+      model: process.env.AI_MODEL || "google/gemini-3-flash-preview",
+    };
+  }
+
+  // 2. Direct Google Gemini key (starts with AIza)
+  if (key.startsWith("AIza")) {
     return {
       key,
       url: process.env.AI_GATEWAY_URL || "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
@@ -24,7 +34,7 @@ export function getAiConfig() {
     };
   }
 
-  // OpenAI Key
+  // 3. OpenAI key (starts with sk-)
   if (key.startsWith("sk-")) {
     return {
       key,
@@ -33,7 +43,7 @@ export function getAiConfig() {
     };
   }
 
-  // AI Gateway / fallback
+  // Fallback
   return {
     key,
     url: process.env.AI_GATEWAY_URL || "https://ai.gateway.lovable.dev/v1/chat/completions",
