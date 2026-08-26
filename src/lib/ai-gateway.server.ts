@@ -7,47 +7,26 @@ When asked about salaries or companies, cite realistic Indian tech ranges (SDE-1
 Keep responses focused; use short paragraphs, bullet lists, and bolded headings sparingly. End with one clear next action.`;
 
 export function getAiConfig() {
-  const key = (
-    process.env.AI_GATEWAY_API_KEY ||
-    process.env.GEMINI_API_KEY ||
-    process.env.VITE_GEMINI_API_KEY ||
-    process.env["LOV" + "ABLE_API_KEY"] ||
-    process.env.OPENAI_API_KEY ||
-    ""
-  ).trim();
+  const geminiKey = (process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || "").trim();
+  const openAiKey = (process.env.OPENAI_API_KEY || "").trim();
+  const gatewayKey = (process.env.AI_GATEWAY_API_KEY || process.env["LOV" + "ABLE_API_KEY"] || "").trim();
 
-  // 1. AI Gateway key (starts with AQ. or set in AI_GATEWAY_API_KEY)
-  if (key.startsWith("AQ.") || process.env.AI_GATEWAY_API_KEY) {
+  // 1. If key starts with sk_ or sk- (Lovable AI Gateway or OpenAI key)
+  const skKey = [gatewayKey, openAiKey, geminiKey].find((k) => k.startsWith("sk_") || k.startsWith("sk-"));
+  if (skKey) {
     return {
-      key,
+      key: skKey,
       url: process.env.AI_GATEWAY_URL || "https://ai.gateway.lovable.dev/v1/chat/completions",
       model: process.env.AI_MODEL || "google/gemini-3-flash-preview",
     };
   }
 
-  // 2. Direct Google Gemini key (starts with AIza)
-  if (key.startsWith("AIza")) {
-    return {
-      key,
-      url: process.env.AI_GATEWAY_URL || "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-      model: process.env.AI_MODEL || "gemini-2.5-flash",
-    };
-  }
-
-  // 3. OpenAI key (starts with sk-)
-  if (key.startsWith("sk-")) {
-    return {
-      key,
-      url: process.env.AI_GATEWAY_URL || "https://api.openai.com/v1/chat/completions",
-      model: process.env.AI_MODEL || "gpt-4o-mini",
-    };
-  }
-
-  // Fallback
+  // 2. Google Gemini API key (starts with AIza or set in GEMINI_API_KEY)
+  const gKey = geminiKey || gatewayKey || openAiKey;
   return {
-    key,
-    url: process.env.AI_GATEWAY_URL || "https://ai.gateway.lovable.dev/v1/chat/completions",
-    model: process.env.AI_MODEL || "google/gemini-3-flash-preview",
+    key: gKey,
+    url: process.env.AI_GATEWAY_URL || "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+    model: process.env.AI_MODEL || "gemini-2.5-flash",
   };
 }
 

@@ -22,6 +22,7 @@ export const Route = createFileRoute("/api/chat")({
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${key}`,
+            "x-goog-api-key": key,
           },
           body: JSON.stringify({
             model,
@@ -31,8 +32,11 @@ export const Route = createFileRoute("/api/chat")({
         });
 
         if (!upstream.ok || !upstream.body) {
+          if (upstream.status === 401) {
+            return new Response("Invalid API Key format. Please set a valid GEMINI_API_KEY in Vercel environment variables (get a free key from https://aistudio.google.com/app/apikey).", { status: 401 });
+          }
           if (upstream.status === 429) return new Response("Rate limited. Try again in a moment.", { status: 429 });
-          if (upstream.status === 402) return new Response("AI credits exhausted. Ask the workspace owner to top up.", { status: 402 });
+          if (upstream.status === 402) return new Response("AI credits exhausted.", { status: 402 });
           const text = await upstream.text().catch(() => "");
           return new Response(text || "AI gateway error", { status: upstream.status });
         }
