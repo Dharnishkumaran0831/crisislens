@@ -39,14 +39,34 @@ function AuthPage() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard", replace: true });
-      else setChecking(false);
-    });
+    let mounted = true;
+
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (mounted) {
+          if (data?.session) navigate({ to: "/dashboard", replace: true });
+          else setChecking(false);
+        }
+      })
+      .catch(() => {
+        if (mounted) setChecking(false);
+      });
+
+    // Timeout safety fallback: if getSession takes > 1.5s, display form anyway
+    const timer = setTimeout(() => {
+      if (mounted) setChecking(false);
+    }, 1500);
+
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate({ to: "/dashboard", replace: true });
+      if (session && mounted) navigate({ to: "/dashboard", replace: true });
     });
-    return () => sub.subscription.unsubscribe();
+
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+      sub.subscription.unsubscribe();
+    };
   }, [navigate]);
 
   if (checking) {

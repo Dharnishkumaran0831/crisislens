@@ -16,8 +16,16 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async () => {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) throw redirect({ to: "/auth" });
+    try {
+      const res = await Promise.race([
+        supabase.auth.getSession(),
+        new Promise<{ data: { session: null } }>((r) => setTimeout(() => r({ data: { session: null } }), 2000)),
+      ]);
+      if (!res?.data?.session) throw redirect({ to: "/auth" });
+    } catch (e: any) {
+      if (e?.to || e?.isRedirect) throw e;
+      throw redirect({ to: "/auth" });
+    }
   },
   component: AuthedShell,
 });
