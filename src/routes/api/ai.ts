@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getAiConfig } from "@/lib/ai-gateway.server";
+import { fetchWithAiFallback } from "@/lib/ai-gateway.server";
 
 type Msg = { role: "user" | "assistant" | "system"; content: string };
 
@@ -7,9 +7,6 @@ export const Route = createFileRoute("/api/ai")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { key, url, model } = getAiConfig();
-        if (!key) return new Response("Missing API key. Please set GEMINI_API_KEY or AI_GATEWAY_API_KEY in environment variables.", { status: 500 });
-
         let body: { system?: string; messages?: Msg[]; stream?: boolean };
         try { body = await request.json(); } catch { return new Response("Invalid JSON", { status: 400 }); }
 
@@ -19,25 +16,15 @@ export const Route = createFileRoute("/api/ai")({
           : history;
         const stream = body.stream !== false;
 
-        const upstream = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${key}`,
-            "x-goog-api-key": key,
-          },
-          body: JSON.stringify({ model, messages, stream }),
-        });
-
-        if (!upstream.ok) {
-          const t = await upstream.text().catch(() => "");
-          if (upstream.status === 401) {
-            return new Response("Invalid API Key format. Please set a valid GEMINI_API_KEY in Vercel environment variables (get a free key from https://aistudio.google.com/app/apikey).", { status: 401 });
-          }
-          if (upstream.status === 429) return new Response("Rate limited. Try again shortly.", { status: 429 });
-          if (upstream.status === 402) return new Response("AI credits exhausted.", { status: 402 });
-          return new Response(t || "AI gateway error", { status: upstream.status });
+        let upstream: Response;
+        try {
+          upstream = await fetchWithAiFallback({ messages, stream });
+        } catch (e: any) {
+          if (e instanceof Response) return e;
+          return new Response(e?.message || "AI Gateway error", { status: 500 });
         }
+
+        if (!upstream.ok) return upstream;
 
         if (!stream) {
           const json = await upstream.json();

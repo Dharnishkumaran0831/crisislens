@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SYSTEM_PROMPT, getAiConfig } from "@/lib/ai-gateway.server";
+import { SYSTEM_PROMPT, fetchWithAiFallback } from "@/lib/ai-gateway.server";
 
 type ChatMessage = { role: "user" | "assistant" | "system"; content: string };
 
@@ -7,9 +7,6 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { key, url, model } = getAiConfig();
-        if (!key) return new Response("Missing API key. Please set GEMINI_API_KEY or AI_GATEWAY_API_KEY in environment variables.", { status: 500 });
-
         let body: { messages?: ChatMessage[] };
         try { body = (await request.json()) as { messages?: ChatMessage[] }; }
         catch { return new Response("Invalid JSON", { status: 400 }); }
@@ -17,28 +14,16 @@ export const Route = createFileRoute("/api/chat")({
         const history = Array.isArray(body.messages) ? body.messages : [];
         const messages: ChatMessage[] = [{ role: "system", content: SYSTEM_PROMPT }, ...history];
 
-        const upstream = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${key}`,
-            "x-goog-api-key": key,
-          },
-          body: JSON.stringify({
-            model,
-            messages,
-            stream: true,
-          }),
-        });
+        let upstream: Response;
+        try {
+          upstream = await fetchWithAiFallback({ messages, stream: true });
+        } catch (e: any) {
+          if (e instanceof Response) return e;
+          return new Response(e?.message || "AI Gateway error", { status: 500 });
+        }
 
         if (!upstream.ok || !upstream.body) {
-          if (upstream.status === 401) {
-            return new Response("Invalid API Key format. Please set a valid GEMINI_API_KEY in Vercel environment variables (get a free key from https://aistudio.google.com/app/apikey).", { status: 401 });
-          }
-          if (upstream.status === 429) return new Response("Rate limited. Try again in a moment.", { status: 429 });
-          if (upstream.status === 402) return new Response("AI credits exhausted.", { status: 402 });
-          const text = await upstream.text().catch(() => "");
-          return new Response(text || "AI gateway error", { status: upstream.status });
+          return upstream;
         }
 
         // Stream SSE → text chunks for the client.
