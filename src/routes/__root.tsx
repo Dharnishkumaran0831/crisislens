@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  isRedirect,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
@@ -35,12 +36,28 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: any; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+
   useEffect(() => {
+    if (isRedirect(error)) {
+      const target = error.href || error.to || "/auth";
+      if (typeof window !== "undefined") {
+        window.location.href = target;
+      }
+      return;
+    }
     reportError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
+
+  if (isRedirect(error)) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <p className="text-sm text-muted-foreground">Redirecting...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -49,7 +66,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           Something went wrong
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Try again or head back home while we regroup.
+          {error?.message || "Try again or head back home while we regroup."}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
