@@ -109,13 +109,7 @@ function AuthPage() {
             <TabsContent value="signup" className="mt-6"><SignUpForm /></TabsContent>
           </Tabs>
 
-          <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
-            <div className="h-px flex-1 bg-border" />
-            OR
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          <GoogleButton />
+         
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
@@ -220,27 +214,3 @@ function SignUpForm() {
   );
 }
 
-function GoogleButton() {
-  const [loading, setLoading] = useState(false);
-  const onClick = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin,
-      },
-    });
-    if (error) {
-      setLoading(false);
-      toast.error(error.message || "Google sign-in failed");
-    }
-  };
-  return (
-    <Button variant="outline" onClick={onClick} disabled={loading} className="w-full border-border bg-background/60">
-      {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : (
-        <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 10.2v3.8h5.4c-.2 1.3-1.6 3.8-5.4 3.8-3.2 0-5.9-2.7-5.9-6s2.6-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 3.3 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z"/></svg>
-      )}
-      Continue with Google
-    </Button>
-  );
-}
