@@ -1,3 +1,7 @@
+/**
+ * PDF project insertion tool.
+ * Appends new portfolio project entries directly to the target PDF document.
+ */
 const fs = require('fs');
 const { PDFDocument, PDFName, StandardFonts, rgb } = require('pdf-lib');
 

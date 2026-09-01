@@ -1,3 +1,7 @@
+/**
+ * Utility script for editing resume PDF annotations and structural elements.
+ * Extracts original hyper-links (LinkedIn, GitHub, LeetCode) and updates content.
+ */
 const fs = require('fs');
 const { PDFDocument, PDFName, PDFString, StandardFonts, rgb } = require('pdf-lib');
 
