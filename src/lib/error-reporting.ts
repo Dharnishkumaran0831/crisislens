@@ -12,15 +12,26 @@ type AppErrorEvents = {
   ) => void;
 };
 
+/**
+ * Global application error reporting utility.
+ */
 export function reportError(error: unknown, context: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
-  const eventsKey = "__" + "lov" + "able" + "Events";
+
+  // Log error to developer console in non-production
+  if (process.env.NODE_ENV !== "production") {
+    console.error("[AppError]", error, context);
+  }
+
+  const eventsKey = "__" + "app" + "Error" + "Events";
   const events = (window as any)[eventsKey] as AppErrorEvents | undefined;
+
   events?.captureException?.(
     error,
     {
       source: "react_error_boundary",
       route: window.location.pathname,
+      timestamp: new Date().toISOString(),
       ...context,
     },
     {
