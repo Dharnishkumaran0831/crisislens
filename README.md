@@ -9,20 +9,21 @@ An intelligent AI-powered Career Guidance Platform and Interactive Developer Por
 
 ---
 
-## ✨ Features
+## ✨ Features & Architecture
 
 - 🎯 **AI Career Counseling**: Personalized career roadmap generation based on student skills and goals.
 - 💼 **Interactive Portfolio**: Showcasing full-stack applications (Medichain, InsurAI, Smart Wardrobe, CareerPilot).
 - 📬 **Direct Contact Interface**: Integrated contact form with automatic status handling.
 - 📄 **PDF Utilities**: Custom Node.js scripts for parsing, modifying, and injecting metadata into PDF resumes.
 - 🎨 **Modern Design**: Dark-mode glassmorphic UI built with Tailwind CSS, Lucide icons, and Radix UI components.
+- ⚙️ **Modular Types & Hooks**: Clean TypeScript domain interfaces (`src/types/portfolio.ts`), global theme hook (`useTheme`), scroll control (`useScrollToTop`), and site configuration (`src/config/site.ts`).
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 19, Vite, TanStack Router, Tailwind CSS, Lucide React
-- **Backend / Services**: Supabase Authentication & Database
+- **Backend / Services**: Supabase Authentication & Database, TanStack Start Server API
 - **Utilities**: `pdf-lib`, `pdf-parse`, Custom Node.js scripts
 
 ---
@@ -68,9 +69,13 @@ npm run postbuild
 ```
 ├── public/                 # Static assets, project mockups, & resume PDF
 ├── src/
-│   ├── components/         # UI components & design system tokens
-│   ├── routes/             # TanStack routing (Landing page, Auth, Dashboard)
-│   └── lib/                # Supabase client & core utilities
+│   ├── components/         # UI components & SEOHead meta tags
+│   ├── config/             # Site configuration & author metadata
+│   ├── data/               # Portfolio projects & skill categories data
+│   ├── hooks/              # Custom React hooks (useTheme, useScrollToTop)
+│   ├── types/              # TypeScript interface definitions
+│   ├── routes/             # TanStack routing & API endpoints
+│   └── lib/                # Supabase client, utils, & error reporting
 ├── add_project_to_pdf.cjs  # Utility to append projects into PDF resume
 ├── edit_pdf.cjs            # Utility to update link annotations in PDF
 ├── inspect_pdf.js          # Helper to extract PDF text structure
