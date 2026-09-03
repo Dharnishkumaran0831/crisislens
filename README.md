@@ -16,7 +16,8 @@ An intelligent AI-powered Career Guidance Platform and Interactive Developer Por
 - 📬 **Direct Contact Interface**: Integrated contact form with automatic status handling.
 - 📄 **PDF Utilities**: Custom Node.js scripts for parsing, modifying, and injecting metadata into PDF resumes.
 - 🎨 **Modern Design**: Dark-mode glassmorphic UI built with Tailwind CSS, Lucide icons, and Radix UI components.
-- ⚙️ **Modular Types & Hooks**: Clean TypeScript domain interfaces (`src/types/portfolio.ts`), global theme hook (`useTheme`), scroll control (`useScrollToTop`), and site configuration (`src/config/site.ts`).
+- ⚙️ **Modular Types & Hooks**: Clean TypeScript domain interfaces (`src/types/portfolio.ts`, `src/types/testimonials.ts`), custom hooks (`useTheme`, `useScrollToTop`, `useLocalStorage`, `useCopyToClipboard`), and site configuration (`src/config/site.ts`).
+- 📊 **Analytics & Telemetry**: Event tracking helper (`src/lib/analytics.ts`) for page views and feature usage metrics.
 
 ---
 
@@ -69,13 +70,13 @@ npm run postbuild
 ```
 ├── public/                 # Static assets, project mockups, & resume PDF
 ├── src/
-│   ├── components/         # UI components & SEOHead meta tags
+│   ├── components/         # UI components, SkillBadge, LoadingSpinner, SEOHead
 │   ├── config/             # Site configuration & author metadata
-│   ├── data/               # Portfolio projects & skill categories data
-│   ├── hooks/              # Custom React hooks (useTheme, useScrollToTop)
+│   ├── data/               # Portfolio projects, testimonials, & roadmap data
+│   ├── hooks/              # Custom React hooks (useTheme, useScrollToTop, useLocalStorage, useCopyToClipboard)
 │   ├── types/              # TypeScript interface definitions
 │   ├── routes/             # TanStack routing & API endpoints
-│   └── lib/                # Supabase client, utils, & error reporting
+│   └── lib/                # Supabase client, utils, analytics, & error reporting
 ├── add_project_to_pdf.cjs  # Utility to append projects into PDF resume
 ├── edit_pdf.cjs            # Utility to update link annotations in PDF
 ├── inspect_pdf.js          # Helper to extract PDF text structure
