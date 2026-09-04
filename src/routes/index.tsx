@@ -70,6 +70,33 @@ interface Project {
 
 const PROJECTS_DATA: Project[] = [
   {
+    id: "crisislens",
+    title: "CrisisLens Emergency AI",
+    subtitle: "AI Crisis & Emergency Incident Dispatch Platform",
+    date: "Aug 2026",
+    category: "Full-Stack AI",
+    image: "/careerpilot_mockup.jpg",
+    color: "from-red-600 via-rose-600 to-indigo-600",
+    accent: "text-rose-400",
+    tags: ["React 19", "TypeScript", "Bolt Host", "Supabase", "AI Incident Engine"],
+    description:
+      "A comprehensive real-time crisis response, disaster management, and automated incident triage platform designed for swift emergency coordination.",
+    problem:
+      "Emergency response systems during natural disasters or critical incidents face communication lag, misrouted emergency calls, and lack real-time situational awareness.",
+    solution:
+      "Architected CrisisLens with high-performance React 19, TypeScript, and Supabase. The platform streamlines emergency incident triage, provides real-time responder updates, and integrates intelligent career & skill tools.",
+    keyFeatures: [
+      "Real-time emergency incident reporting & geo-tagged disaster tracking",
+      "Automated AI triage engine for emergency priority categorization",
+      "Interactive responder dispatch console with live telemetry dashboard",
+      "Supabase real-time backend synchronization & scalable database architecture",
+      "Live production deployment on Bolt Host with instant response speeds"
+    ],
+    techStack: ["React 19", "TypeScript", "Supabase", "Tailwind CSS", "Framer Motion", "Bolt Host"],
+    liveUrl: "https://crisislens-emergency-jzd5.bolt.host",
+    githubUrl: "https://github.com/Dharnishkumaran0831/crisislens"
+  },
+  {
     id: "careerpilot",
     title: "CareerPilot AI",
     subtitle: "AI-Powered Career & Placement Platform",
@@ -90,11 +117,11 @@ const PROJECTS_DATA: Project[] = [
       "Interactive AI Mock Interviewer simulating real-world engineering questions",
       "Personalized step-by-step career path & skill roadmap generator",
       "Supabase backend database integration for user profiles & analytical tracking",
-      "Production deployment hosted on Vercel platform with lightning-fast speeds"
+      "Production deployment hosted on Bolt platform with lightning-fast speeds"
     ],
-    techStack: ["React 19", "TypeScript", "Supabase", "Tailwind CSS", "Framer Motion", "Vercel"],
-    liveUrl: "https://careerpilot-ai.vercel.app",
-    githubUrl: "https://github.com/Dharnishkumaran0831"
+    techStack: ["React 19", "TypeScript", "Supabase", "Tailwind CSS", "Framer Motion", "Bolt Host"],
+    liveUrl: "https://crisislens-emergency-jzd5.bolt.host",
+    githubUrl: "https://github.com/Dharnishkumaran0831/crisislens"
   },
   {
     id: "policyflow",
@@ -119,8 +146,8 @@ const PROJECTS_DATA: Project[] = [
       "Reduced policy processing latency and operational manual overhead"
     ],
     techStack: ["TypeScript", "Node.js", "Process Automation Logic", "RESTful Architecture"],
-    liveUrl: "https://github.com/Dharnishkumaran0831",
-    githubUrl: "https://github.com/Dharnishkumaran0831"
+    liveUrl: "https://crisislens-emergency-jzd5.bolt.host",
+    githubUrl: "https://github.com/Dharnishkumaran0831/crisislens"
   }
 ];
 

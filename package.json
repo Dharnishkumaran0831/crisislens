@@ -1,5 +1,6 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "crisislens",
+  "description": "CrisisLens - Emergency Response Management & AI Intelligence Platform",
   "private": true,
   "sideEffects": false,
   "type": "module",

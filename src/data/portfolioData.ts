@@ -2,13 +2,25 @@ import { Project, SkillCategory } from '../types/portfolio';
 
 export const PORTFOLIO_PROJECTS: Project[] = [
   {
+    id: 'crisislens',
+    title: 'CrisisLens Emergency AI',
+    description: 'Real-time emergency incident dispatching, crisis analytics, and AI career guidance platform.',
+    category: 'Full-Stack',
+    tags: ['React 19', 'TypeScript', 'Vite', 'Supabase', 'Tailwind CSS'],
+    imageUrl: '/careerpilot_mockup.jpg',
+    githubUrl: 'https://github.com/Dharnishkumaran0831/crisislens',
+    liveUrl: 'https://crisislens-emergency-jzd5.bolt.host',
+    featured: true,
+  },
+  {
     id: 'career-pilot-ai',
     title: 'CareerPilot AI',
     description: 'AI-driven career guidance platform offering personalized skill assessment and career path recommendations.',
     category: 'Full-Stack',
     tags: ['React', 'TypeScript', 'Vite', 'Supabase', 'Tailwind CSS'],
     imageUrl: '/careerpilot_mockup.jpg',
-    githubUrl: 'https://github.com/Dharnishkumaran0831/career-Ai',
+    githubUrl: 'https://github.com/Dharnishkumaran0831/crisislens',
+    liveUrl: 'https://crisislens-emergency-jzd5.bolt.host',
     featured: true,
   },
   {

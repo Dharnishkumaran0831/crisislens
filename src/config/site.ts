@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
-  name: "Dharnishkumaran R Portfolio & CareerPilot AI",
-  description: "Official developer portfolio and AI career counseling platform for Dharnishkumaran R.",
-  url: "https://github.com/Dharnishkumaran0831/career-Ai",
+  name: "CrisisLens & Dharnishkumaran R Developer Platform",
+  description: "Official repository and live deployment platform for CrisisLens — Emergency Management & AI Intelligence Platform.",
+  url: "https://crisislens-emergency-jzd5.bolt.host",
   ogImage: "/careerpilot_mockup.jpg",
   author: {
     name: "Dharnishkumaran R",
@@ -14,7 +14,8 @@ export const SITE_CONFIG = {
     location: "Tiruppur, Tamil Nadu, India",
   },
   links: {
-    githubRepo: "https://github.com/Dharnishkumaran0831/career-Ai",
+    githubRepo: "https://github.com/Dharnishkumaran0831/crisislens",
+    liveDemo: "https://crisislens-emergency-jzd5.bolt.host",
     insurAi: "https://github.com/Dharnishkumaran0831/InsurAI-Project",
     medichainAi: "https://github.com/Dharnishkumaran0831/medichain-ai",
   },
