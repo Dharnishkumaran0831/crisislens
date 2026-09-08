@@ -1,7 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
-Disallow: /auth
-Disallow: /dashboard
-Disallow: /coding
-Disallow: /placements
-Disallow: /chat
+
+Sitemap: https://github.com/Dharnishkumaran0831/career-Ai/sitemap.xml
