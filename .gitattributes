@@ -1,0 +1,18 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Custom diff drivers
+*.md text diff=markdown
+*.ts text
+*.tsx text
+*.json text
+*.cjs text
+*.js text
+*.css text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.ico binary
