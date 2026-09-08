@@ -15,12 +15,13 @@ An intelligent AI-powered Career Guidance Platform and Interactive Developer Por
 - 💼 **Interactive Portfolio**: Showcasing full-stack applications (Medichain, InsurAI, Smart Wardrobe, CareerPilot).
 - 💬 **AI Chat Sessions**: Chat prompt presets (`src/data/chatPresets.ts`) and domain message types (`src/types/chat.ts`).
 - 👤 **User Profiles & Settings**: Domain profile models (`src/types/user.ts`) and default user configuration (`src/data/defaultSettings.ts`).
+- 🏥 **System Health & Metrics**: Service health types (`src/types/health.ts`), health metrics dataset (`src/data/healthData.ts`), and animated status badges (`src/components/ui/StatusBadge.tsx`).
 - 📬 **Direct Contact Interface**: Integrated contact form with automatic status handling & client rate-limiting (`src/lib/rateLimiter.ts`).
 - 📄 **PDF Utilities**: Custom Node.js scripts for parsing, modifying, and injecting metadata into PDF resumes.
-- 🎨 **Modern Design & UI**: Dark-mode glassmorphic UI, Modal dialog overlays, Toast notifications, Tooltips, CardContainers, and SkillBadges.
-- ⚙️ **Modular Types & Hooks**: Clean TypeScript domain interfaces, custom hooks (`useTheme`, `useScrollToTop`, `useLocalStorage`, `useCopyToClipboard`, `useDebounce`, `useMediaQuery`, `useOnClickOutside`, `useDocumentTitle`), and site configuration (`src/config/site.ts`).
-- ⚡ **Caching & Telemetry**: TTL in-memory cache manager (`src/lib/cache.ts`) and analytics tracking helper (`src/lib/analytics.ts`).
-- 📱 **PWA & Security**: Mobile webmanifest (`public/site.webmanifest`) and pre-configured HTTP response security headers (`public/_headers`).
+- 🎨 **Modern Design & UI**: Dark-mode glassmorphic UI, AccordionContainers, Modal dialog overlays, Toast notifications, Tooltips, CardContainers, and SkillBadges.
+- ⚙️ **Modular Types & Hooks**: Clean TypeScript domain interfaces, custom hooks (`useTheme`, `useScrollToTop`, `useLocalStorage`, `useCopyToClipboard`, `useDebounce`, `useMediaQuery`, `useOnClickOutside`, `useDocumentTitle`, `useIntersectionObserver`, `useKeyPress`), and site configuration (`src/config/site.ts`).
+- ⚡ **Caching, Env & Telemetry**: Environment validator (`src/lib/envValidator.ts`), TTL in-memory cache manager (`src/lib/cache.ts`), and analytics tracking helper (`src/lib/analytics.ts`).
+- 📱 **PWA, SEO & Security**: Mobile webmanifest (`public/site.webmanifest`), `robots.txt` crawler guide, and pre-configured HTTP response security headers (`public/_headers`).
 
 ---
 
@@ -71,15 +72,15 @@ npm run postbuild
 ## 📁 Repository Structure
 
 ```
-├── public/                 # Static assets, site.webmanifest, project mockups, & resume PDF
+├── public/                 # Static assets, site.webmanifest, robots.txt, project mockups, & resume PDF
 ├── src/
-│   ├── components/         # UI components, ToastNotification, TooltipContainer, Modal, CardContainer, SkillBadge, SEOHead
+│   ├── components/         # UI components, StatusBadge, AccordionContainer, ToastNotification, TooltipContainer, Modal, CardContainer, SkillBadge, SEOHead
 │   ├── config/             # Site configuration & author metadata
-│   ├── data/               # Portfolio projects, chat presets, defaultSettings, testimonials, & roadmap data
-│   ├── hooks/              # Custom React hooks (useTheme, useDebounce, useMediaQuery, useOnClickOutside, useDocumentTitle, useLocalStorage, useCopyToClipboard)
-│   ├── types/              # TypeScript interface definitions (user, portfolio, chat, testimonials)
+│   ├── data/               # Portfolio projects, healthData, chat presets, defaultSettings, testimonials, & roadmap data
+│   ├── hooks/              # Custom React hooks (useTheme, useDebounce, useMediaQuery, useOnClickOutside, useDocumentTitle, useIntersectionObserver, useKeyPress, useLocalStorage, useCopyToClipboard)
+│   ├── types/              # TypeScript interface definitions (health, user, portfolio, chat, testimonials)
 │   ├── routes/             # TanStack routing & API endpoints
-│   └── lib/                # Supabase client, utils, rateLimiter, cache, analytics, & error reporting
+│   └── lib/                # Supabase client, utils, envValidator, rateLimiter, cache, analytics, & error reporting
 ├── add_project_to_pdf.cjs  # Utility to append projects into PDF resume
 ├── edit_pdf.cjs            # Utility to update link annotations in PDF
 ├── inspect_pdf.js          # Helper to extract PDF text structure
