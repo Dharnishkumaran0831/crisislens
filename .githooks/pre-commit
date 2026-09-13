@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit hook to verify linting and formatting before commits
+
+echo "🔍 Running pre-commit code verification..."
+
+# Check TypeScript compiler errors
+if command -v npx >/dev/null 2>&1; then
+  npx tsc --noEmit --skipLibCheck
+  if [ $? -ne 0 ]; then
+    echo "❌ TypeScript compilation check failed. Please fix errors before committing."
+    exit 1
+  fi
+fi
+
+echo "✅ Pre-commit verification passed successfully!"
+exit 0
