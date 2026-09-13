@@ -1,0 +1,4 @@
+Contact: mailto:dharnishkumaranrdk@gmail.com
+Preferred-Languages: en, ta
+Canonical: https://github.com/Dharnishkumaran0831/career-Ai/.well-known/security.txt
+Policy: https://github.com/Dharnishkumaran0831/career-Ai
